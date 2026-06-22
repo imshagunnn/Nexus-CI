@@ -1,55 +1,67 @@
 # Nexus CI — Competitor Intelligence & Lead Discovery Platform
 
-A production-quality MVP that helps founders analyze competitors, discover leads, and get AI-powered business recommendations.
+Nexus CI is an AI-powered business intelligence platform designed to help founders, startups, and product teams understand their competitive landscape, identify market opportunities, discover potential customers, and make data-driven product decisions.
 
 ## Features
 
-- **Competitor Analysis** — 7+ competitors with pricing, features, positioning charts, and feature gap analysis
-- **Lead Generation** — Ranked target companies with decision-maker contacts and confidence scores
-- **Recommendation Engine** — Feature roadmap, competitive advantages, opportunities, risks, and sales targets
-- **Founder Dashboard** — Executive decision cards answering key strategic questions
-- **Export** — PDF reports and CSV exports for leads and competitors
-- **Mock Data Fallback** — Works fully without external APIs
+### Competitor Analysis
 
-## Tech Stack
+* Identify and analyze relevant competitors
+* Compare product offerings, features, pricing, and positioning
+* Visualize competitor strengths and weaknesses
+* Perform feature gap and market landscape analysis
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | Next.js 15+, TypeScript, Tailwind CSS, shadcn/ui-style components |
-| Charts | Recharts |
-| Data Fetching | TanStack React Query |
-| Validation | Zod |
-| Export | jsPDF, PapaParse |
-| Backend | Next.js API Routes |
-| Deployment | Vercel |
+### Lead Generation
 
-## Setup Instructions
+* Discover potential customer companies
+* Identify relevant decision-makers
+* Prioritize leads using confidence-based scoring
 
-### Prerequisites
+### Recommendation Engine
 
-- Node.js 18+
-- npm 9+
+* Feature prioritization recommendations
+* Competitive advantage analysis
+* Market opportunity identification
+* Risk assessment and sales recommendations
+
+### Founder Dashboard
+
+* Executive-level insights and recommendations
+* Competitive threat analysis
+* High-priority leads and opportunities
+* Action-oriented decision support
+
+### Export Functionality
+
+* Export competitor analysis reports
+* Export lead data as CSV
+* Generate shareable reports
+
+## Technology Stack
+
+* **Frontend:** Next.js, TypeScript, Tailwind CSS
+* **UI Components:** shadcn/ui-inspired components
+* **Charts & Visualizations:** Recharts
+* **Data Fetching:** TanStack React Query
+* **Validation:** Zod
+* **Export Tools:** jsPDF, PapaParse
+* **Backend:** Next.js API Routes
+* **Deployment:** Vercel
+
+## Getting Started
 
 ### Installation
 
 ```bash
-# Clone the repository
-git clone <your-repo-url>
+git clone <repository-url>
 cd nexus-ci
-
-# Install dependencies
 npm install
-
-# Copy environment variables
-cp .env.example .env.local
-
-# Start development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open `http://localhost:3000` in your browser.
 
-### Build for Production
+### Production Build
 
 ```bash
 npm run build
@@ -58,124 +70,50 @@ npm start
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `OPENAI_API_KEY` | No | OpenAI API key for enhanced AI analysis |
-| `TAVILY_API_KEY` | No | Tavily API for web research |
-| `FIRECRAWL_API_KEY` | No | Firecrawl API for web scraping |
-| `NEXT_PUBLIC_SUPABASE_URL` | No | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | No | Supabase anonymous key |
+The application supports optional third-party integrations:
 
-> The app works fully without any API keys using intelligent mock data generation.
+* OPENAI_API_KEY
+* TAVILY_API_KEY
+* FIRECRAWL_API_KEY
+* NEXT_PUBLIC_SUPABASE_URL
+* NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-## Architecture Overview
+The platform includes intelligent mock data generation and can function without external API keys.
 
-```
-src/
-├── app/
-│   ├── api/analyze/        # POST endpoint for analysis
-│   ├── dashboard/          # Dashboard page
-│   ├── page.tsx            # Landing page
-│   └── providers.tsx       # React Query provider
-├── components/
-│   ├── charts/             # Recharts visualizations
-│   ├── common/             # Shared UI (badges, exports, errors)
-│   ├── competitors/        # Competitor module components
-│   ├── dashboard/          # Metrics & founder dashboard
-│   ├── leads/              # Lead generation components
-│   ├── recommendations/    # Recommendation engine UI
-│   └── ui/                 # Base UI components (shadcn-style)
-├── hooks/
-│   ├── useAnalysis.ts      # Analysis mutation hook
-│   └── useDebounce.ts      # Input debouncing
-├── services/
-│   ├── competitorService.ts
-│   ├── leadService.ts
-│   ├── recommendationService.ts
-│   └── mockData.ts         # Mock data generator
-├── types/
-│   └── index.ts            # TypeScript interfaces
-└── utils/
-    ├── cache.ts            # In-memory response cache
-    ├── export.ts           # CSV/PDF export
-    └── validation.ts       # Zod schemas & sanitization
-```
+## Architecture
 
-### Data Flow
+The application follows a modular architecture with dedicated layers for:
 
-1. User enters product idea on landing page
-2. Dashboard page calls `POST /api/analyze` with validated input
-3. API checks cache → calls OpenAI (if configured) → falls back to mock data
-4. Full `AnalysisReport` returned and rendered across dashboard modules
-5. User can export results as PDF or CSV
+* Competitor Analysis
+* Lead Generation
+* Recommendation Engine
+* Dashboard & Visualization
+* Export Services
+* Validation & Caching
 
 ## Assumptions
 
-1. **Mock data is realistic** — When external APIs are unavailable, the system generates contextually relevant mock data based on the product idea keywords
-2. **Pricing is estimated** — Competitor pricing shown as ranges, parsed for chart visualization
-3. **Lead contacts are illustrative** — Contact names and LinkedIn URLs are AI-generated placeholders, not verified real contacts
-4. **Confidence scores reflect data quality** — Verified Information (80-95%), AI Inference (70-88%), Assumption (65-80%)
-5. **OpenAI integration is optional** — When configured, it attempts AI analysis but still structures output consistently
-6. **No persistent storage** — Analysis results are cached in-memory for 30 minutes; no database required for MVP
-7. **Single-user session** — No authentication required for MVP demo
+* Competitor insights may contain AI-generated inferences when public information is unavailable.
+* Lead information is intended for demonstration purposes and may not represent verified contact data.
+* Confidence scores indicate the estimated reliability of generated insights.
+* The MVP uses in-memory caching and does not require a database.
 
-## Deployment Instructions
+## Live Demo
 
-### Vercel (Recommended)
+**Application:** https://nexus-ci-u5x9.vercel.app/
 
-1. Push code to GitHub
-2. Import project in [Vercel Dashboard](https://vercel.com/new)
-3. Add environment variables from `.env.example` (optional)
-4. Deploy
+## GitHub Repository
 
-```bash
-# Or deploy via CLI
-npm i -g vercel
-vercel
-```
+**Repository:** https://github.com/imshagunnn/Nexus-CI
 
-### Environment on Vercel
+## Future Enhancements
 
-- Set `OPENAI_API_KEY` in Vercel project settings if you want live AI analysis
-- No environment variables required for demo mode
+* Real-time competitor monitoring
+* CRM integrations
+* Advanced lead enrichment
+* Historical market tracking
+* Team collaboration features
 
-## API Reference
+---
 
-### `POST /api/analyze`
-
-**Request:**
-```json
-{
-  "productIdea": "AI-powered project management for remote teams",
-  "websiteUrl": "https://example.com",
-  "companyName": "MyStartup"
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "data": {
-    "id": "...",
-    "productName": "MyStartup",
-    "competitors": [...],
-    "leads": [...],
-    "featureRecommendations": [...],
-    "founderDecisions": [...],
-    "metrics": { ... }
-  }
-}
-```
-
-**Error Codes:**
-| Code | Description |
-|------|-------------|
-| `VALIDATION_ERROR` | Invalid input |
-| `EMPTY_INPUT` | Missing product idea |
-| `TIMEOUT` | Analysis exceeded 28s |
-| `API_FAILURE` | Server error |
-
-## License
-
-MIT — Built for the Nexus Internship Assignment.
+Developed as part of the Nexus Internship Assignment.
