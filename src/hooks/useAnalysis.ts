@@ -5,7 +5,7 @@ import type { AnalysisInput, AnalyzeResponse } from "@/types";
 
 export function useAnalysis() {
   const controllerRef = useRef<AbortController | null>(null);
-  const [data, setData] = useState<AnalyzeResponse["data"]>(null);
+ const [data, setData] = useState<AnalyzeResponse["data"] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
